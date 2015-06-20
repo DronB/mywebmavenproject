@@ -18,7 +18,7 @@
                             <div class="form-group">
                                 <label for="password">Password: </label><input class="form-control" type="password" name="password" />
                             </div>
-                            <input class="btn btn-success" type="submit" />
+                            <input class="btn btn-success" type="submit" value="Согласен" />
                         </form>
                     </div>
                 </div>

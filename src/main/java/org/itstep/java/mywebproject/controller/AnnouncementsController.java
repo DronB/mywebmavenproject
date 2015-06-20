@@ -6,12 +6,10 @@ import org.itstep.java.mywebproject.model.Announcement;
 import org.itstep.java.mywebproject.model.Category;
 import org.itstep.java.mywebproject.model.User;
 import org.itstep.java.mywebproject.service.AnnouncementsService;
-import org.itstep.java.mywebproject.service.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +22,6 @@ public class AnnouncementsController {
 
     @Autowired
     AnnouncementsService announcementsService;
-    UserDAO userdao;
-
-//    @RequestMapping(method = RequestMethod.GET)
-//    public String announcements(ModelMap model) {
-//        model.addAttribute("announcements", announcementsService.all());
-//        return "all";
-//    }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public String all(Model model) {
@@ -92,9 +83,9 @@ public class AnnouncementsController {
         return "myannouncement";
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String delete(
-            @PathVariable(value = "id") Integer id,
+            @RequestParam(value = "id") Integer id,
             Model model) {
 
         Announcement ann = announcementsService.findAnnouncement(id);
@@ -102,4 +93,5 @@ public class AnnouncementsController {
 
         return "redirect:/announcements/myannouncement";
     }
+    
 }

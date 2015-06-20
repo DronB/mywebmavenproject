@@ -43,7 +43,7 @@
                                 <label for="user_id">User_id: </label><input class="form-control" type="text" name="user_id" value="${current.id}" />
                             </div>
                             
-                            <input class="btn btn-success" type="submit" />
+                            <input class="btn btn-success" type="submit" value="Согласен"/>
                         </form>
                     </div>
                 </div>

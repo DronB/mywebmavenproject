@@ -31,7 +31,12 @@
                                         <li>  Адрес(контакты): <textarea class="form-control" rows="3"  name="address">${item.address}</textarea> </li>
                                     </ul>   
                                 </div>
-                                <a class="btn btn-success" href="<c:url value="/announcements/delete/${item.id}" />">Удалить</a>    
+                                    
+                                <form action="<c:url value="/announcements/delete" />" method="post" >    
+                                    <input type="text" name="id" value="${item.id}" hidden="hidden" />
+                                    <input class="btn btn-success" type="submit" value="Удалить"/>
+                                </form>
+                                    
                             </div>    
                         </c:forEach>             
 

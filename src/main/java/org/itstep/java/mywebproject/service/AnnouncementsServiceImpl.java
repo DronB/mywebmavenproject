@@ -27,13 +27,6 @@ public class AnnouncementsServiceImpl implements AnnouncementsService {
         return sf.getCurrentSession().createQuery("from Announcement").list();
     }
     
-////    @Override
-//    public List<Announcement> MyAnnouncement(Integer iduser) {
-//        Query q = sf.getCurrentSession().createQuery("from Announcement g where g.user_id = :userId");
-//        q.setInteger("userId", iduser);
-//        return q.list();
-//    }
-    
     @Override
     public List<Announcement> MyAnnouncement(User user) {
         
