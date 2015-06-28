@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserService {
 
     User find(Integer id);
-    List<User> findAll() throws SQLException;
+    List<User> findAll();
     void save(User u);
+    List<User> findNew(Integer id);
+    void delete(User u);
 }

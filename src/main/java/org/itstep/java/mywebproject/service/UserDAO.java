@@ -23,13 +23,22 @@ public class UserDAO implements UserService, UserDetailsService {
     SessionFactory sf;
 
     @Override
-    public List<User> findAll() throws SQLException {
+    public List<User> findAll() {
         return sf.getCurrentSession().createQuery("from User").list();
     }
 
+    //old
     @Override
     public User find(Integer id) {
         return (User) sf.getCurrentSession().get(User.class, id);
+    }
+    
+     @Override
+    public List<User> findNew(Integer idu) {
+        
+        Query q = sf.getCurrentSession().createQuery("from User u where u.id = :userId");
+        q.setInteger("userId", idu);
+        return q.list();
     }
 
     @Override
@@ -54,5 +63,10 @@ public class UserDAO implements UserService, UserDetailsService {
     @Override
     public void save(User u) {
         sf.getCurrentSession().save(u);
+    }
+    
+    @Override
+    public void delete(User u) {
+         sf.getCurrentSession().delete(u); 
     }
 }

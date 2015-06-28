@@ -1,5 +1,9 @@
 package org.itstep.java.mywebproject.controller;
 
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.itstep.java.mywebproject.model.Announcement;
 import org.itstep.java.mywebproject.service.UserService;
 import org.itstep.java.mywebproject.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +30,19 @@ public class UserController {
             UsernamePasswordAuthenticationToken currentUser,
             @RequestParam(value = "id", required = true, defaultValue = "1") Integer id,
             Model model) {
-        User u = userService.find(id);
+
         User current = (User) currentUser.getPrincipal();
+
+        if (current.getIsadmin() == null) {
+            List<User> u = userService.findNew(current.getId());
+            model.addAttribute("user", u);
+            model.addAttribute("current", current);
+            model.addAttribute("title", current.getName());
+
+            return "user";
+        }
+        
+        List<User> u = userService.findAll();
         model.addAttribute("user", u);
         model.addAttribute("current", current);
         model.addAttribute("title", current.getName());
@@ -51,8 +66,36 @@ public class UserController {
     public String newposition(
             @ModelAttribute("user") User user,
             Model model) {
-        userService.save(user);
 
-        return "redirect:/user/login";
+        Pattern p = Pattern.compile("^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$");
+        Matcher m = p.matcher(user.getEmail());
+        boolean b = m.matches();
+
+        if (b) {
+            userService.save(user);
+            return "redirect:/user/login";
+        }
+        model.addAttribute("valemail", "Неверно введен Email адрес !");
+        return "registration";
+    }
+    
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String delete(
+            UsernamePasswordAuthenticationToken currentUser,
+            @RequestParam(value = "id") Integer id,
+            Model model) {
+
+        User u = userService.find(id);
+
+        User current = (User) currentUser.getPrincipal();
+
+        if (current.getIsadmin() == null) {
+            userService.delete(u);
+            return "redirect:/user/logout";
+        }
+
+        userService.delete(u);
+
+        return "redirect:/user/show";
     }
 }

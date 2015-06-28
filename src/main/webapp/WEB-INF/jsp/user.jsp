@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -13,10 +14,16 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Выбранный пользователь</h3>
                         </div>
+                        <c:forEach items="${user}" var="item">
                         <div class="panel-body">
-                            <div>${user.name}</div>
-                            <div>${user.email}</div>
+                            <div>${item.name}</div>
+                            <div>${item.email}</div>
                         </div>
+                        <form action="<c:url value="/user/delete" />" method="post" >    
+                                    <input type="text" name="id" value="${item.id}" hidden="hidden" />
+                                    <input class="btn btn-success" type="submit" value="Удалить"/>
+                        </form>
+                        </c:forEach>
                     </div>
                 </div>
 
